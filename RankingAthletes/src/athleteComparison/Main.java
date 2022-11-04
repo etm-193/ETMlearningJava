@@ -13,15 +13,34 @@ public class Main {
 		Athletes athlete3 = new Athletes("Alex", 30, 10);
 		Athletes athlete4 = new Athletes("Sara", 20, 10);
 		
-		athlete1.compareTo(athlete2);
-		athlete1.compareTo(athlete3);
-		athlete1.compareTo(athlete4);
-		
-		athlete2.compareTo(athlete3);	
-		athlete2.compareTo(athlete4);
-		
-		athlete3.compareTo(athlete4);
-		
+	athlete1.setWinPercentage(athlete1.percentageCalc());
+	athlete2.setWinPercentage(athlete2.percentageCalc());
+	athlete3.setWinPercentage(athlete3.percentageCalc());
+	athlete4.setWinPercentage(athlete4.percentageCalc());
+	
+	System.out.println(athlete1.getWinPercentage());
+	System.out.println(athlete2.getWinPercentage());
+	System.out.println(athlete3.getWinPercentage());
+	System.out.println(athlete4.getWinPercentage());
+	
+	athlete1.compareTo(athlete2);
+	athlete1.compareTo(athlete3);
+	athlete1.compareTo(athlete4);
+	
+	athlete2.compareTo(athlete1);
+	athlete2.compareTo(athlete3);
+	athlete2.compareTo(athlete4);
+	
+	athlete3.compareTo(athlete1);
+	athlete3.compareTo(athlete2);
+	athlete3.compareTo(athlete4);
+	
+	athlete4.compareTo(athlete1);
+	athlete4.compareTo(athlete2);
+	athlete4.compareTo(athlete3);
+	
+	
+	
 		
 		
 	}

@@ -5,9 +5,9 @@ package athleteComparison;
 public class Athletes implements Comparable<Athletes>{
 	
 	private String athleteName;
-	private int numWins;
-	private int numLoss;
-	private int winTotal; //Alternate parameter variable in case win % is the same
+	private double numWins;
+	private double numLoss;
+	private double careerRaceTotal;
 	private double winPercentage;
 
 	//constructor
@@ -19,21 +19,23 @@ public class Athletes implements Comparable<Athletes>{
 		this.numLoss = numLoss;
 	}
 	
-	public Athletes(String athleteName, int numWins, int numLoss, int winTotal, double winPercentage) {
+	public Athletes(String athleteName, int numWins, int numLoss, int careerRaceTotal, double winPercentage) {
 		super();
 		this.athleteName = athleteName;
 		this.numWins = numWins;
 		this.numLoss = numLoss;
-		this.winTotal = winTotal;
+		this.careerRaceTotal = careerRaceTotal;
 		this.winPercentage = winPercentage;
 	}
 	
 	// methods
 	
-	public int raceTotal() {
-		int raceTotal = numWins + numLoss;
+	public double raceTotal() {
+		double raceTotal = (numWins + numLoss);
+		setCareerRaceTotal(raceTotal);
 		return raceTotal;
 	}
+
 //	!= working logic:
 //	public int calcWinTotal() {
 //		int winTotal = numWins - numLoss;
@@ -41,23 +43,25 @@ public class Athletes implements Comparable<Athletes>{
 //	}
 //	
 	public double percentageCalc() {
-		double careerWinsPercentage = numWins / raceTotal();
+		double careerWinsPercentage = numWins / (numWins + numLoss);
 		winPercentage = careerWinsPercentage;
+		setWinPercentage(winPercentage);
 		return winPercentage;
 	}
 	
 	public Object requirements(Athletes other) {
 		//This method checks if an athlete obj meets the minimum race total, if not it ranks the winner on the alternate stat. (bonus)
-		
+		Object winner;
 		System.out.println(this.athleteName + " has a total of " + this.raceTotal() + " races in their career.");
 		System.out.println(other.athleteName + " has a total of " + other.raceTotal() + " races in their career.");
 		if (this.raceTotal() >= 30 && other.raceTotal() >= 30) {
-			normalStatsCheck(other);
+			winner = normalStatsCheck(other);
 		} else {
 			int alternate = 0;
-			alternateStatsCheck(alternate, other);
+			winner = alternateStatsCheck(alternate, other);
 		}
-		return other;
+		System.out.println(winner);
+		return winner;
 	}
 	
 	
@@ -65,7 +69,7 @@ public class Athletes implements Comparable<Athletes>{
 		//This method runs the standard comparison between the num of races won.
 //		
 		//placeholder variable
-		int winner = 0;
+		Object winner = 0;
 		int alternate = 0;
 		
 		// Initial object "this." win % higher..
@@ -75,22 +79,25 @@ public class Athletes implements Comparable<Athletes>{
 		// Initial object "this./other." win % have tied.
 		String itsATie = "Both " + this.athleteName + " and " + other.athleteName +  " have " + this.winPercentage + "% win rate!";
 		
-		
 		this.winPercentage = this.percentageCalc();
 		other.winPercentage = other.percentageCalc();
 		
+		System.out.println(this.winPercentage);
+		System.out.println(other.winPercentage);
+		
+		
 		if (this.winPercentage > other.winPercentage) {
-		System.out.println(thisWins);
-		winner = 1;
+			winner = 1;
+			System.out.println(thisWins);
 		} else if (this.winPercentage < other.winPercentage) {
-			System.out.println(otherWins);
 			winner = -1;
+			System.out.println(otherWins);
 		} else {
-		System.out.println(itsATie);
+			System.out.println(itsATie);
 		//variation 1 of the alternate method
 			alternate = 1;
-			alternateStatsCheck(alternate, other);
-			winner = 0;
+			winner = alternateStatsCheck(alternate, other);
+			
 		}	
 		return winner;
 	}
@@ -110,19 +117,21 @@ public class Athletes implements Comparable<Athletes>{
 	
 	String thisWinsAlt = this.athleteName + " has won more races than " + other.athleteName + "! " + this.athleteName + " ranks above " + other.athleteName + ".";
 	String otherWinsAlt = other.athleteName + " has won more races than " + this.athleteName + "! " + other.athleteName + " ranks above " + this.athleteName + ".";
-	String itsATieAlt = "Both " + this.athleteName + " and " + other.athleteName +  " have " + this.winTotal + " wins in their record!";
+	String itsATieAlt = "Both " + this.athleteName + " and " + other.athleteName +  " have " + this.numWins + " wins in their record!";
 	
 	
-	if (alternatePlaceHold == 0) {
+	if (alternatePlaceHold == 0
+			
+			) {
 		System.out.println(caseStatement0);
 	} else {
 		System.out.println(caseStatement1);
 	}
 	
-	if (this.numWins < other.numWins) {
+	if (this.numWins > other.numWins) {
 		System.out.println(thisWinsAlt);
 		winner = 1;
-	} else if (this.numWins > other.numWins){
+	} else if (this.numWins < other.numWins){
 		System.out.println(otherWinsAlt);
 		winner = -1;
 	} else { 
@@ -145,15 +154,11 @@ public class Athletes implements Comparable<Athletes>{
 		if (other == null) { 
 			throw new NullPointerException(); 
 			}
-			requirements(other);
 			
-			return 0;
-			
-			
+			requirements(other);	
+			return (int) 0;
 			
 		}
-		
-	
 	
 	//Setters and getters
 	
@@ -164,25 +169,25 @@ public class Athletes implements Comparable<Athletes>{
 	public void setAthleteName(String athleteName) {
 		this.athleteName = athleteName;
 	}
-	public int getNumWins() {
+	public double getNumWins() {
 		return numWins;
 	}
 	public void setNumWins(int numWins) {
 		this.numWins = numWins;
 	}
-	public int getNumLoss() {
+	public double getNumLoss() {
 		return numLoss;
 	}
 	public void setNumLoss(int numLoss) {
 		this.numLoss = numLoss;
 	}
-	
-	public int getWinTotal() {
-		return winTotal;
+
+	public double getCareerRaceTotal() {
+		return careerRaceTotal;
 	}
 
-	public void setWinTotal(int winTotal) {
-		this.winTotal = winTotal;
+	public void setCareerRaceTotal(double careerRaceTotal) {
+		this.careerRaceTotal = careerRaceTotal;
 	}
 
 	public double getWinPercentage() {
